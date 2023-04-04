@@ -1,0 +1,20 @@
+{
+    "folders": [
+        {
+            "name": "Cartridge Examples",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "*.asm": "kickassembler"
+        },
+        "kickassembler.assembler.option.outputDirectory": ".\\Output",
+        "files.exclude": {
+            "**/.asminfo.txt": true,
+            "**/.source.txt": true,
+            "**/Output": true
+        },
+        "kickassembler.assembler.option.binfile": true
+    }
+}
