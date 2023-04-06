@@ -1,0 +1,1 @@
+.const displayTextAddress = $8100

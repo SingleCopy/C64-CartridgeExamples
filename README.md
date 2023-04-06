@@ -26,3 +26,8 @@ To run this file you will need to convert the .bin using the following command: 
 This example builds on the previous example except it now have 2 ROM banks. After all of the previous steps in `Cartridge Example 4` has been executed and the `loop` subroutine is running, the keyboard is checked to see if the spacebar has been pressed. When the spacebar is detected, it writes the value 1 to memory address $DE00. In ocean cartridges, this will trigger switching the ROM bank to 1 (Bank_01_0). Then the subroutine `displayTextAddress` is called except now the one in ROM bank 1 is executed. Finally the `loop` subroutine is called in RAM.
 
 To run this file you will need to convert the .bin using the following command: `cartconv.exe -t ocean -n 'CartridgeExample5' -i 'CartridgeExample5.bin' -o 'CartridgeExample5.crt'`
+
+## Cartridge Example 6
+This example is exactly the same code as the previous example except that now each ROM bank is in its own file. After the `bootLoader` code has been copied to RAM and executed, it calls `SET_CARTRIDGE_ROM_BANK_V` which is required to switch the ROM bank to number 1. Once the space bar is pressed, `SET_CARTRIDGE_ROM_BANK_V` is called again except now it switches to ROM bank 2. 
+
+To run this file you will need to convert the .bin using the following command: `cartconv.exe -t ocean -n 'CartridgeExample6' -i 'CartridgeExample6.bin' -o 'CartridgeExample6.crt'`

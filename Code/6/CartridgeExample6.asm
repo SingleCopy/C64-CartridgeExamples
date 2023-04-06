@@ -1,24 +1,22 @@
 //==============================================================================
-//                        Cartridge Example 5
+//                        Cartridge Example 6
 //
-//  This example has 2 ROM banks, after everything has been copied over to RAM
-//  It checks if the spacebar has been pressed, if so it will switch ROM banks
-//  and jump to it to change the text on the screen
+//  This example has 3 ROM banks, this example is similar to the previous 
+//  example except now the rom banck are in different files
 //==============================================================================
-
+#import "libDefines.asm"
 #import "../../CartridgeLibrary/libCartridgeIncludes.asm"
+#import "Bank_01_0.asm"
+#import "Bank_02_0.asm"
 
-.segment CARTRIDGE_FILE [outBin="CartridgeTest5.bin"]
+.segment CARTRIDGE_FILE [outBin="CartridgeTest6.bin"]
 .segmentout [segments = "Bank_00_0"]
 .segmentout [segments = "Bank_01_0"]
+.segmentout [segments = "Bank_02_0"]
 .segmentout [segments = "Bank_End"]
 
 .segmentdef Bank_00_0 [start=$8000, min=$8000, max=$9fff, fill]
-.segmentdef Bank_01_0 [start=$8000, min=$8000, max=$9fff, fill]
-.segmentdef Bank_End [start=$9FFF, min=$0, max=$7bfff, fill]
-
-.const displayTextAddress = $8100
-.encoding "screencode_upper"
+.segmentdef Bank_End [start=$9FFF, min=$0, max=$79fff, fill]
 
 .segment Bank_00_0
 {
@@ -101,7 +99,8 @@
           bootLoader:
           {
                // Set text in cartridge
-               jsr textSetup
+               SET_CARTRIDGE_ROM_BANK_V(1)
+               jsr displayTextAddress
 
                loop:
                {
@@ -132,53 +131,11 @@
 
                switchRomBank:
                {
-                    SET_CARTRIDGE_ROM_BANK_V(1)
+                    SET_CARTRIDGE_ROM_BANK_V(2)
                     jsr displayTextAddress
                     jmp loop            
                }
           }
-     }
-
-     *=displayTextAddress
-     textSetup: 
-     {
-          ldx #0
-
-          printChar: 
-               lda text,x     // Load next char value
-               cmp #$FF       // Have we reached the end of the string
-               beq out        // If null, jump to out:
-               sta $0400,x    // Write char to screen
-               inx
-               jmp printChar
-          out:
-               rts
-
-          text: 
-               .text "ROM BANK 0"
-               .byte $FF      
-     }
-}
-
-.segment Bank_01_0
-*=displayTextAddress
-{
-     textSetup: 
-     {
-               ldx #0
-          loop: 
-               lda text,x     // Load next char value
-               cmp #$FF       // Have we reached the end of the string
-               beq out        // If null, jump to out:
-               sta $0400,x    // Write char to screen
-               inx
-               jmp loop
-          out:
-               rts
-
-          text:    
-               .text "ROM BANK 1"
-               .byte $FF
      }
 }
 
