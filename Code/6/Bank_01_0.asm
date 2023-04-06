@@ -20,7 +20,7 @@
                rts
 
           text:    
-               .text "ROM BANK 1"
+               .text "ROM BANK 2"
                .byte $FF
      }
 }

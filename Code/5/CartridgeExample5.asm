@@ -8,7 +8,7 @@
 
 #import "../../CartridgeLibrary/libCartridgeIncludes.asm"
 
-.segment CARTRIDGE_FILE [outBin="CartridgeTest5.bin"]
+.segment CARTRIDGE_FILE [outBin="CartridgeExample5.bin"]
 .segmentout [segments = "Bank_00_0"]
 .segmentout [segments = "Bank_01_0"]
 .segmentout [segments = "Bank_End"]

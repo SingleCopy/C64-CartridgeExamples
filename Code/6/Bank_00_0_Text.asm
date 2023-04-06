@@ -1,9 +1,9 @@
 #import "libDefines.asm"
 
-.segmentdef Bank_02_0 [start=$8000, min=$8000, max=$9fff, fill]
+.segmentdef Bank_00_0_Text [start=$8100, min=$8100, max=$9fff, fill]
 
 .encoding "screencode_upper"
-.segment Bank_02_0
+.segment Bank_00_0_Text
 *=displayTextAddress
 {
      textSetup: 
@@ -20,7 +20,7 @@
                rts
 
           text:    
-               .text "ROM BANK 2"
+               .text "ROM BANK 1"
                .byte $FF
      }
 }

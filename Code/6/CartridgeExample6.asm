@@ -1,24 +1,24 @@
 //==============================================================================
 //                        Cartridge Example 6
 //
-//  This example has 3 ROM banks, this example is similar to the previous 
-//  example except now the rom banck are in different files
+//  This example shows how files can be in the same and in their own ROM banks.
+//  This example is similar to the previous example except now ROM bank 00_0 is
+//  split across 2 files and ROM bank 01_0 is in a different file
 //==============================================================================
 #import "libDefines.asm"
 #import "../../CartridgeLibrary/libCartridgeIncludes.asm"
+#import "Bank_00_0_Text.asm"
 #import "Bank_01_0.asm"
-#import "Bank_02_0.asm"
 
-.segment CARTRIDGE_FILE [outBin="CartridgeTest6.bin"]
-.segmentout [segments = "Bank_00_0"]
+.segment CARTRIDGE_FILE [outBin="CartridgeExample6.bin"]
+.segmentout [segments = "Bank_00_0_Boot, Bank_00_0_Text"]
 .segmentout [segments = "Bank_01_0"]
-.segmentout [segments = "Bank_02_0"]
 .segmentout [segments = "Bank_End"]
 
-.segmentdef Bank_00_0 [start=$8000, min=$8000, max=$9fff, fill]
-.segmentdef Bank_End [start=$9FFF, min=$0, max=$79fff, fill]
+.segmentdef Bank_00_0_Boot [start=$8000, min=$8000, max=$80FF, fill]
+.segmentdef Bank_End [start=$9FFF, min=$0, max=$7bfff, fill]
 
-.segment Bank_00_0
+.segment Bank_00_0_Boot
 {
      .const copyProgramRomAddress = $8060
      .const copyProgramRamAddress = $0801
@@ -99,7 +99,6 @@
           bootLoader:
           {
                // Set text in cartridge
-               SET_CARTRIDGE_ROM_BANK_V(1)
                jsr displayTextAddress
 
                loop:
@@ -131,7 +130,7 @@
 
                switchRomBank:
                {
-                    SET_CARTRIDGE_ROM_BANK_V(2)
+                    SET_CARTRIDGE_ROM_BANK_V(1)
                     jsr displayTextAddress
                     jmp loop            
                }

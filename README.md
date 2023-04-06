@@ -28,6 +28,6 @@ This example builds on the previous example except it now have 2 ROM banks. Afte
 To run this file you will need to convert the .bin using the following command: `cartconv.exe -t ocean -n 'CartridgeExample5' -i 'CartridgeExample5.bin' -o 'CartridgeExample5.crt'`
 
 ## Cartridge Example 6
-This example is exactly the same code as the previous example except that now each ROM bank is in its own file. After the `bootLoader` code has been copied to RAM and executed, it calls `SET_CARTRIDGE_ROM_BANK_V` which is required to switch the ROM bank to number 1. Once the space bar is pressed, `SET_CARTRIDGE_ROM_BANK_V` is called again except now it switches to ROM bank 2. 
+This example is exactly the same code as the previous example except that now ROM bank 00_0 is split across 2 files and ROM bank 01_0 is in its own file. After the `bootLoader` code has been copied to RAM and executed, it calls the `displayTextAddress` which is still in ROM bank 00_0. Once the space bar is pressed, `SET_CARTRIDGE_ROM_BANK_V` is called which switches it to ROM bank 1 (Bank_01_0). 
 
 To run this file you will need to convert the .bin using the following command: `cartconv.exe -t ocean -n 'CartridgeExample6' -i 'CartridgeExample6.bin' -o 'CartridgeExample6.crt'`
